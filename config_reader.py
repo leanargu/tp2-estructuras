@@ -28,12 +28,14 @@ config.read("config.ini")
 # ###############################################
 
 #### imprime todos los items de todas las secciones
-
-for section in config.sections():
-    if section != "default":
-        print("\n[%s]" % section)
-        url_base = config.get(section,"url_base")
-        for item in config.items(section):
-            if item[1] != url_base:
-                print(url_base + item[1])
+def imprimir_secciones():
+    lista_de_secciones = []
+    for section in config.sections():
+        if section != "default":
+            print("\n[%s]" % section)
+            url_base = config.get(section,"url_base")
+            for item in config.items(section):
+                if item[1] != url_base:
+                    lista_de_secciones.append(url_base + item[1])
+    return lista_de_secciones
 ##################################################

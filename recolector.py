@@ -1,5 +1,14 @@
-import feedparser
+import requests
+from bs4 import BeautifulSoup
+import config_reader
 
-feed = feedparser.parse("https://www.clarin.com/rss/lo-ultimo/")
+def print_xml(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, features="html.parser")
+    print(soup.prettify())
 
-print(feed)
+def imprimir_todo():
+    for seccion in config_reader.imprimir_secciones():
+        print_xml(seccion)
+
+imprimir_todo()
