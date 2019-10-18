@@ -1,14 +1,23 @@
 import requests
-from bs4 import BeautifulSoup
 import config_reader
 
-def print_xml(url):
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, features="html.parser")
-    print(soup.prettify())
+def print_xml(nombre_archivo,url):
+    archivo = open(nombre_archivo + ".xml", "a")
+    response = requests.get(url).content.decode('utf-8')
+    archivo.write(response)
 
 def imprimir_todo():
-    for seccion in config_reader.imprimir_secciones():
-        print_xml(seccion)
+    for url in config_reader.imprimir_secciones():
+        print_xml(url)
 
-imprimir_todo()
+
+
+
+
+
+
+
+
+
+
+
