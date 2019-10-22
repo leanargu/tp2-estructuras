@@ -48,4 +48,6 @@ def guardar_todas_las_noticias():
             guardar_noticia(medio, seccion)
 
 
-
+if __name__ == '__main__':
+    fm.crear_archivos()
+    guardar_todas_las_noticias()

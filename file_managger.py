@@ -50,7 +50,7 @@ def crear_archivo_xml():
         secciones = cr.get_secciones_por_medio(medio)
         for seccion in secciones:
             xml_path = get_path_xml(medio, seccion)
-            f = open(xml_path + ".xml", "w+")
+            f = open(xml_path, "w+")
             f.close()
 
 def crear_archivos():
@@ -64,7 +64,7 @@ def crear_archivos():
 
 
 def get_path_xml(medio, seccion):
-    xml_path = ROOT_DIR + medio + "/" + seccion + "/" + seccion
+    xml_path = ROOT_DIR + medio + "/" + seccion + "/" + seccion + ".xml"
 
     return xml_path
 
