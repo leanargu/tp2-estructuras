@@ -1,4 +1,5 @@
 import recolector
+import xml_helper as xml
 try:
     from ConfigParser import ConfigParser
 except ImportError:
@@ -49,9 +50,9 @@ config.read("config.ini")
 ########################################################################################################
 
 def get_medios():
-    '''
+    """
     :return: retorna una lista con los medios que hay en el archivo config.ini
-    '''
+    """
 
     lista_medios = []
     sections = config.sections()
@@ -62,10 +63,10 @@ def get_medios():
     return lista_medios
 
 def get_secciones_por_medio(medio):
-    '''
+    """
     :param medio: es el medio de comunicacion al cual se le va a consultar sus secciones
     :return: retorna una lista con las secciones que tiene cada medio de comunicación
-    '''
+    """
 
     lista_secciones = []
     medio = config.items(medio)
@@ -76,9 +77,9 @@ def get_secciones_por_medio(medio):
     return lista_secciones
 
 def get_todas_secciones():
-    '''
+    """
     :return: retorna una lista con todas las secciones de todos los medios existentes en el archivo config.ini
-    '''
+    """
     lista_secciones = []
     medios = get_medios()
 
@@ -94,36 +95,36 @@ def get_default():
 
 
 def get_link(medio_comunicacion, seccion):
-    '''
-
+    """
     :param medio_comunicacion:
     :param seccion:
-    :return:
-    '''
+    :return: url completa (url base + el path del rss)
+    """
+    url_base = config.get(medio_comunicacion, "url_base")
+    path_rss = config.get(medio_comunicacion, seccion)
+
+    url = url_base + path_rss
+
+    return url
+
 
 
 def get_all_links_rss():
-    '''
+    """
     :return: retorno una lista con todos los links completos de los rss.
-    '''
+    """
 
     lista_url = []
-    sections = config.sections()
+    medios = get_medios()
 
-    for medio in sections:
-        if medio != 'default':
-            url_base = config.get(medio, "url_base")
+    for medio in medios:
+        secciones = get_secciones_por_medio(medio)
+        for seccion in secciones:
+            url = get_link(medio, seccion)
+            lista_url.append(url)
 
-            medio_comunicacion = config.items(medio)
-
-            for seccion in medio_comunicacion:
-                rss_path = seccion[1]
-
-                if rss_path != url_base:
-                    url = url_base + rss_path
-                    lista_url.append(url)
     return lista_url
 
 
 if __name__ == '__main__':
-    get_all_links_rss()
+    print(get_all_links_rss())
