@@ -40,7 +40,7 @@ def crear_carpetas_secciones():
             else:
                 print("Se ha creado el directorio: %s " % directorio)
 
-def crear_archivo_xml():
+def crear_archivos_xml():
     """
     crea los archivos xml para cada seccion
     :return:
@@ -50,7 +50,7 @@ def crear_archivo_xml():
         secciones = cr.get_secciones_por_medio(medio)
         for seccion in secciones:
             xml_path = get_path_xml(medio, seccion)
-            f = open(xml_path, "w+")
+            f = open(xml_path, "a+")
             f.close()
 
 def crear_archivos():
@@ -60,7 +60,7 @@ def crear_archivos():
     """
     crear_carpeta_medios()
     crear_carpetas_secciones()
-    crear_archivo_xml()
+    crear_archivos_xml()
 
 
 def get_path_xml(medio, seccion):
