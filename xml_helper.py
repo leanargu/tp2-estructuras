@@ -21,7 +21,7 @@ def write_xml(path_xml, noticias):
         #else:
             #save_all_response
     #except:
-    archivo = open(path_xml, "a")
+    archivo = open(path_xml, "a", encoding="utf-8")
     archivo.write(noticias)
 
 def borrar_noticia():
@@ -30,8 +30,18 @@ def borrar_noticia():
     :return:
     """
 def noticia_repetida(path_xml, noticia):
-    #if (
-    pass
+    noticias_obtenidas = get_noticias(path_xml)
+
+
+    for titulos_fechas_noticia in get_titulos_fechas(noticias_obtenidas):
+        titulo_noticia_guardada = titulos_fechas_noticia[0]
+        titulo_noticia_nueva = noticia.find('title').text
+        fecha_noticia_guardada = titulos_fechas_noticia[1]
+        fecha_noticia_nueva = noticia.find('pubDate').text
+        if titulo_noticia_nueva == titulo_noticia_guardada or fecha_noticia_guardada == fecha_noticia_nueva:
+            return True
+    return False
+
 def read_xml(archivo):
     pass
 
@@ -44,7 +54,7 @@ def get_noticias(xml_path):
 
     return noticias
 
-def get_titulo_fecha(noticias):
+def get_titulos_fechas(noticias):
     """
     :param noticias: recibe una lista de noticias las cuales analizara su contenido
     :return: retorna una lista de tuplas que contendran el titulo y la fecha de cada noticia
@@ -54,10 +64,6 @@ def get_titulo_fecha(noticias):
         fecha = noticia.find('pubDate').text
         yield titulo, fecha
 
-def get_fechas(noticias):
-    for noticia in noticias:
-        fecha = noticia.find('pubDate').text
-        print(fecha)
 
 
 # if __name__ == '__main__':
